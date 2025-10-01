@@ -1,0 +1,60 @@
+.home-page-wrapper{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 5vw 0 0 0;
+
+    .home-page-container{
+        width: 80vw;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5vw;
+
+        .home-page-title{
+            font-size: 2.5vw;
+            color: #666;
+        }
+
+        .home-page-input-container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2vw;
+            width: 100%;
+
+            input{
+                padding: 0.5vw 0.8vw;
+                border: 1px solid #666; 
+                border-radius: 1vw;      
+                font-size: 1.1vw;
+                width: 20vw;            
+                transition: all 0.4s ease;
+                color: #666;
+
+                &:focus {
+                    outline: none;
+                    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+                }
+
+                &::placeholder {
+                    color: #666;
+                }
+            }
+        }
+
+        .home-page-cities-list-contain{
+            display: flex;
+            align-items: center;
+            gap: 5vw;
+            flex-wrap: wrap;
+
+            .home-page-cities-subtitle{
+                color: #666;
+                font-size: 1.1vw;
+            }
+        }
+    }
+}
