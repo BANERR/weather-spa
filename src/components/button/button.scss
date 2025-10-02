@@ -24,3 +24,25 @@
         }
     }
 }
+
+@media (max-width: 768px) {
+    .button-container{
+        padding: 0.75vw 1.2vw;
+        border-radius: 1.5vw;
+
+        .button-text{
+            font-size: 1.5vw;
+        }
+    }
+}
+
+@media (max-width: 430px) {
+    .button-container{
+        padding: 1.5vw 2.4vw;
+        border-radius: 2vw;
+
+        .button-text{
+            font-size: 3.3vw;
+        }
+    }
+}

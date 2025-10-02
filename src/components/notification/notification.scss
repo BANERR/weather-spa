@@ -1,15 +1,15 @@
 .notification {
   position: fixed;
-  top: 20px;
-  right: 20px;
-  padding: 12px 20px;
-  border-radius: 8px;
+  top: 1.3vw;
+  right: 1.3vw;
+  padding: 0.8vw 1.3vw;
+  border-radius: 1vw;
   color: white;
   font-weight: 500;
   z-index: 1000;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 1vw;
   animation: slideIn 0.3s ease-out;
 }
 
@@ -40,5 +40,25 @@
 }
 
 .notification__icon {
-  font-size: 18px;
+  font-size: 1vw;
+}
+
+@media (max-width: 768px) {
+  .notification{
+    top: 2vw;
+    right: 2vw;
+    padding: 1.2vw 2vw;
+    border-radius: 1.5vw;
+    gap: 3vw;
+  }
+}
+
+@media (max-width: 430px) {
+  .notification{
+    top: 3.9vw;
+    right: 3.9vw;
+    padding: 2.4vw 3.9vw;
+    border-radius: 3vw;
+    gap: 3vw;
+  }
 }
