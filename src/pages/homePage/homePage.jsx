@@ -59,7 +59,7 @@ const HomePage = () => {
                         });
                     }
                 } catch (error) {
-                    console.error(`Помилка завантаження ${city.name}:`, error);
+                    console.error(`Error ${city.name}:`, error);
                 }
             }
             
@@ -74,7 +74,7 @@ const HomePage = () => {
 
     const handleAddCity = async () => {
         if (!newCityName.trim()) {
-            showNotification('Введіть назву міста', 'error');
+            showNotification('Enter city name', 'error');
             return;
         }
 
@@ -83,14 +83,14 @@ const HomePage = () => {
             const prevCitiesList = citiesJSON ? JSON.parse(citiesJSON) : [];
             
             if (prevCitiesList.some(city => city.name.toLowerCase() === newCityName.toLowerCase())) {
-                showNotification('Це місто вже додано', 'error');
+                showNotification('This city has already been added', 'error');
                 return;
             }
 
             const coordinatesData = await getWeatherInCityByName(newCityName);
             
             if (!coordinatesData || coordinatesData.length === 0) {
-                showNotification('Місто не знайдено', 'error');
+                showNotification('City not found', 'error');
                 return;
             }
 
@@ -120,12 +120,12 @@ const HomePage = () => {
                 }]);
             }
 
-            showNotification('Місто успішно додано!');
+            showNotification('City successfully added!');
             setNewCityName('');
             
         } catch (error) {
-            console.error('Помилка при додаванні міста:', error);
-            showNotification('Помилка при додаванні міста', 'error');
+            console.error('Error adding city:', error);
+            showNotification('Error adding city', 'error');
         }
     };
 
@@ -138,24 +138,24 @@ const HomePage = () => {
         
         // Оновлюємо стан без повторного виклику loadCities
         setCitiesList(prev => prev.filter(city => city.name !== cityName));
-        showNotification(`Місто ${cityName} видалено`, 'success');
+        showNotification(`City ${cityName} is deleted`, 'success');
     };
 
     const handleDeleteAllCities = () => {
         if (citiesList.length === 0) {
-            showNotification('Список міст порожній', 'error');
+            showNotification('The list of cities is empty.', 'error');
             return;
         }
 
-        if (window.confirm('Ви впевнені, що хочете видалити всі міста?')) {
+        if (window.confirm('Are you sure you want to delete all cities?')) {
             localStorage.removeItem('citiesList');
             setCitiesList([]);
-            showNotification('Всі міста видалено', 'success');
+            showNotification('All cities have been removed', 'success');
         }
     };
 
     useEffect(() => {
-        console.log('Оновлений список міст:', citiesList);
+        console.log('Updated list of cities:', citiesList);
     }, [citiesList]);
 
     return (
