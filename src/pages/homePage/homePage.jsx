@@ -29,7 +29,6 @@ const HomePage = () => {
 
     const loadCities = async () => {
         setLoading(true)
-        setCitiesList([])
         const citiesJSON = localStorage.getItem('citiesList');
         const citiesListLocalStorage = citiesJSON ? JSON.parse(citiesJSON) : [];
         
@@ -54,7 +53,9 @@ const HomePage = () => {
                             pressure: cityData.current.pressure,
                             clouds: cityData.current.clouds,
                             windSpeed: cityData.current.wind_speed,
-                            windGust: cityData.current.wind_gust
+                            windGust: cityData.current.wind_gust,
+                            lat: city.lat,
+                            lon: city.lon
                         });
                     }
                 } catch (error) {
@@ -63,9 +64,8 @@ const HomePage = () => {
             }
             
             setCitiesList(loadedCities);
-            setLoading(false)
-            console.log(citiesList)
         }
+        setLoading(false)
     };
 
     useEffect(() => {
@@ -103,6 +103,7 @@ const HomePage = () => {
             const updatedCities = [...prevCitiesList, newCity];
             localStorage.setItem('citiesList', JSON.stringify(updatedCities));
 
+            // Оновлюємо список міст без повторного завантаження всіх даних
             const weatherData = await getWeatherInCityByCoordinates(newCity.lat, newCity.lon);
             if (weatherData) {
                 setCitiesList(prev => [...prev, {
@@ -113,7 +114,9 @@ const HomePage = () => {
                     pressure: weatherData.current.pressure,
                     clouds: weatherData.current.clouds,
                     windSpeed: weatherData.current.wind_speed,
-                    windGust: weatherData.current.wind_gust
+                    windGust: weatherData.current.wind_gust,
+                    lat: newCity.lat,
+                    lon: newCity.lon
                 }]);
             }
 
@@ -126,7 +129,31 @@ const HomePage = () => {
         }
     };
 
-    // Логування змін у списку міст
+    const handleDeleteCity = (cityName) => {
+        const citiesJSON = localStorage.getItem('citiesList');
+        const prevCitiesList = citiesJSON ? JSON.parse(citiesJSON) : [];
+        
+        const updatedCities = prevCitiesList.filter(city => city.name !== cityName);
+        localStorage.setItem('citiesList', JSON.stringify(updatedCities));
+        
+        // Оновлюємо стан без повторного виклику loadCities
+        setCitiesList(prev => prev.filter(city => city.name !== cityName));
+        showNotification(`Місто ${cityName} видалено`, 'success');
+    };
+
+    const handleDeleteAllCities = () => {
+        if (citiesList.length === 0) {
+            showNotification('Список міст порожній', 'error');
+            return;
+        }
+
+        if (window.confirm('Ви впевнені, що хочете видалити всі міста?')) {
+            localStorage.removeItem('citiesList');
+            setCitiesList([]);
+            showNotification('Всі міста видалено', 'success');
+        }
+    };
+
     useEffect(() => {
         console.log('Оновлений список міст:', citiesList);
     }, [citiesList]);
@@ -148,9 +175,9 @@ const HomePage = () => {
                     />
                     <Button text={'Add city'} onClick={handleAddCity}/>
                     <Button text={'Update weather'} onClick={loadCities}/>
+                    <Button text={'Delete all'} onClick={handleDeleteAllCities} className="delete-all-btn"/>
                 </div>
 
-                {/* Сповіщення */}
                 {notification.message && (
                     <div className={`notification notification--${notification.type}`}>
                         {notification.message}
@@ -163,6 +190,7 @@ const HomePage = () => {
                             <CityCard
                                 key={`${city.name}-${index}`}
                                 cityData={city}
+                                onDelete={() => handleDeleteCity(city.name)}
                             />
                         ))
                     ) : (

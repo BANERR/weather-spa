@@ -1,26 +1,35 @@
 'use client';
 
+import Button from '../button/button';
 //styles
 import './cityCard.scss';
 
 //react
 import { useRouter } from 'next/navigation';
 
-const CityCard = ({cityData}) => {
+const CityCard = ({cityData, onDelete}) => {
 
     const router = useRouter();
 
-    const handlClick = () => {
-        localStorage.setItem('cityName', JSON.stringify(cityData.name));
+    const handleClick = () => {
+        localStorage.setItem('cityData', JSON.stringify({name: cityData.name, lat: cityData.lat, lon: cityData.lon}));
         router.push(`/city/${cityData.name.replace(/\s/g, '')}`)
+    }
+
+    const handleDeleteClick = (e) => {
+        e.stopPropagation(); // Запобігає виклику handleClick при кліку на кнопку видалення
+        if (window.confirm(`Видалити ${cityData.name}?`)) {
+            onDelete();
+        }
     }
 
     return(
         <div className="city-card-wrapper" 
-            onClick={() => handlClick()}
+            onClick={handleClick}
             onMouseEnter={() => router.prefetch(`/city/${cityData.name.replace(/\s/g, '')}`)}
         >
             <div className="city-card-container">
+                
                 <div className="city-card-info">
                     Name: {cityData.name}
                 </div>
@@ -48,6 +57,8 @@ const CityCard = ({cityData}) => {
                 <div className="city-card-info">
                     Time: {new Date().toLocaleTimeString()}
                 </div>
+                <Button text={'Delete city'} onClick={(e)=>handleDeleteClick(e)}/>
+
             </div>
         </div>
     )

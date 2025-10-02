@@ -1,0 +1,61 @@
+.city-info-page-wrapper{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 5vw 0 5vw 0;
+
+    .city-info-page-container{
+        width: 80vw;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1vw;
+
+        .city-info-page-title{
+            color: #666;
+            font-size: 2.5vw;
+            margin-bottom: 3vw;
+        }
+
+        .city-info-page-subtitle{
+            color: #666;
+            font-size: 1.1vw;
+        }
+
+        .city-info-page-info-container{
+            display: flex;
+            gap: 2vw;
+            align-items: center;
+            width: 100%;
+            flex-wrap: wrap;
+
+            .city-info-page-info-text{
+                color: #666;
+                font-size: 1.1vw;
+            }
+
+            .city-info-page-info-hourly{
+                display: flex;
+                gap: 1vw;
+                align-items: center;
+
+                border-radius: 1vw;
+                border: 1px solid #666;
+                padding: 1vw;
+                width: 100%;
+            }
+
+            .city-info-page-info-daily{
+                display: flex;
+                flex-direction: column;
+                gap: 0.5vw;
+                
+
+                border-radius: 1vw;
+                border: 1px solid #666;
+                padding: 1vw;
+            }
+        }
+    }
+}
