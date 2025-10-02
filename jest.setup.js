@@ -1,7 +1,5 @@
-// jest.setup.js
-import '@testing-library/jest-dom';
+require('@testing-library/jest-dom');
 
-// Mock localStorage
 const localStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
@@ -10,7 +8,6 @@ const localStorageMock = {
 };
 global.localStorage = localStorageMock;
 
-// Mock Next.js router
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
     push: jest.fn(),
