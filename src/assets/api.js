@@ -1,7 +1,7 @@
 const APIKey = '302b913080778e4d1c7646fd134a413e';
 
 const getCoordinatesByCityName = async (cityName) => {
-    const APILink = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${APIKey}`;
+    const APILink = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${APIKey}`;
 
     try {
         const response = await fetch(APILink);
